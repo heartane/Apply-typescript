@@ -1,4 +1,11 @@
 import express from 'express';
+import {
+  createTweet,
+  deleteTweet,
+  getTweet,
+  getTweets,
+  updateTweet,
+} from '../controllers/tweets.js';
 
 const router = express.Router();
 

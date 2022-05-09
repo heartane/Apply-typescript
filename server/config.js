@@ -16,6 +16,9 @@ export const config = {
     port: required('PORT', 8080),
     env: required('NODE_ENV'),
   },
+  bcrypt: {
+    saltRounds: required('SALT_ROUNDS', 10),
+  },
 };
 
 /* 
