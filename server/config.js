@@ -17,7 +17,14 @@ export const config = {
     env: required('NODE_ENV'),
   },
   bcrypt: {
-    saltRounds: required('SALT_ROUNDS', 10),
+    saltRounds: parseInt(required('SALT_ROUNDS', 10)),
+  },
+  jwt: {
+    secretKey: required('JWT_SECRET_KEY'),
+    expireTime: required('JWT_EXPIRATION_TIME', '3h'),
+  },
+  test: {
+    password: required('TEST_PASSWORD'),
   },
 };
 

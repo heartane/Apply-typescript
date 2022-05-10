@@ -4,8 +4,8 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 
 import { config } from './config.js';
-import userRoutes from './routes/user.js';
-import tweetRoutes from './routes/tweet.js';
+import userRoutes from './routes/users.js';
+import tweetRoutes from './routes/tweets.js';
 import { errHandler, notFound } from './middlewares/error.js';
 
 const app = express();

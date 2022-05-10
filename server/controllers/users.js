@@ -1,7 +1,8 @@
 import 'express-async-errors';
 import bcrypt from 'bcrypt';
 import { config } from '../config.js';
-import { createUser, findByEmail } from '../models/user.js';
+import { createUser, findByEmail, findById } from '../models/user.js';
+import { createJwtToken } from '../utils/createToken.js';
 
 export const signup = async (req, res, next) => {
   const { email, password, name, url } = req.body;
@@ -10,7 +11,8 @@ export const signup = async (req, res, next) => {
   const userExists = await findByEmail(email);
 
   if (userExists) {
-    res.status(409).json({ message: `${username} already exists` });
+    res.status(409).json({ message: `${email} / already exists` });
+    return;
   }
   // 비밀번호 암호화
   const salt = await bcrypt.genSalt(config.bcrypt.saltRounds);
@@ -43,6 +45,17 @@ export const login = async (req, res, next) => {
   }
 
   // 토큰 생성
+  const accessToken = createJwtToken({ id: user.id });
+
+  res.status(200).json({ token: accessToken, email });
 };
 
-export const checkMe = async (req, res, next) => {};
+export const checkMe = async (req, res, next) => {
+  const user = await findById(req.user.id);
+
+  if (!user) {
+    res.status(404).json({ message: 'User not found' });
+    return;
+  }
+  res.status(200).json({ message: 'checked' });
+};
